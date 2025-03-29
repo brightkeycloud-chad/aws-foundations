@@ -1,4 +1,4 @@
-# AWS Foundations Day 1 Exercises
+# AWS Foundations Day 1 Exercise Solutions
 
 ## ✅ Exercise 1: Enable PDF email delivery of the monthly bill
 - Navigate to the **Billing Dashboard**.
