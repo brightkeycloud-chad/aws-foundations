@@ -1,0 +1,11 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: ECR repository
+
+Resources:
+  DemoRepository:
+    Type: AWS::ECR::Repository
+    Properties:
+      RepositoryName: demo-nodejs-app
+      Tags:
+        - Key: costcenter
+          Value: demo

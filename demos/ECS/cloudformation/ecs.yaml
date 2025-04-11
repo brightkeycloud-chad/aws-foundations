@@ -1,0 +1,79 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: ECS Cluster and Service
+
+Parameters:
+  VpcId:
+    Type: String
+  SubnetId:
+    Type: String
+
+Resources:
+  DemoLogGroup:
+    Type: AWS::Logs::LogGroup
+    Properties:
+      LogGroupName: /ecs/demo
+      RetentionInDays: 7
+      Tags:
+        - Key: costcenter
+          Value: demo
+
+  DemoCluster:
+    Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: demo-cluster
+      Tags:
+        - Key: costcenter
+          Value: demo
+
+  TaskExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: ecs-tasks.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
+      Tags:
+        - Key: costcenter
+          Value: demo
+
+  DemoTaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: demo-task
+      RequiresCompatibilities: [FARGATE]
+      NetworkMode: awsvpc
+      Cpu: "256"
+      Memory: "512"
+      ExecutionRoleArn: !GetAtt TaskExecutionRole.Arn
+      ContainerDefinitions:
+        - Name: demo-container
+          Image: !Sub "${AWS::AccountId}.dkr.ecr.us-west-2.amazonaws.com/demo-nodejs-app:latest"
+          Essential: true
+          PortMappings:
+            - ContainerPort: 3000
+          LogConfiguration:
+            LogDriver: awslogs
+            Options:
+              awslogs-region: us-west-2
+              awslogs-group: /ecs/demo
+              awslogs-stream-prefix: demo
+
+  DemoService:
+    Type: AWS::ECS::Service
+    Properties:
+      Cluster: !Ref DemoCluster
+      DesiredCount: 1
+      LaunchType: FARGATE
+      TaskDefinition: !Ref DemoTaskDefinition
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          Subnets: [!Ref SubnetId]
+          AssignPublicIp: ENABLED
+      Tags:
+        - Key: costcenter
+          Value: demo
