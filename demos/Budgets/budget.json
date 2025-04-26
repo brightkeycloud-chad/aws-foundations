@@ -1,0 +1,27 @@
+{
+  "BudgetName": "ZeroCostBudget",
+  "BudgetLimit": {
+    "Amount": "0",
+    "Unit": "USD"
+  },
+  "BudgetType": "COST",
+  "CostFilters": {},
+  "CostTypes": {
+    "IncludeTax": true,
+    "IncludeSubscription": true,
+    "UseBlended": false,
+    "IncludeRefund": false,
+    "IncludeCredit": false,
+    "IncludeUpfront": true,
+    "IncludeRecurring": true,
+    "IncludeOtherSubscription": true,
+    "IncludeSupport": true,
+    "IncludeDiscount": true,
+    "UseAmortized": false
+  },
+  "TimeUnit": "MONTHLY",
+  "TimePeriod": {
+    "Start": 1745380127000,
+    "End": 2147483647000
+  }
+}

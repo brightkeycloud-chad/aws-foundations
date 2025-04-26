@@ -1,0 +1,28 @@
+[
+  {
+    "NotificationType": "ACTUAL",
+    "ComparisonOperator": "GREATER_THAN",
+    "Threshold": 0,
+    "ThresholdType": "ABSOLUTE_VALUE",
+    "NotificationState": "ALARM",
+    "Subscribers": [
+      {
+        "SubscriptionType": "EMAIL",
+        "Address": "chad@brightkeycloud.com"
+      }
+    ]
+  },
+  {
+    "NotificationType": "FORECASTED",
+    "ComparisonOperator": "GREATER_THAN",
+    "Threshold": 0,
+    "ThresholdType": "ABSOLUTE_VALUE",
+    "NotificationState": "ALARM",
+    "Subscribers": [
+      {
+        "SubscriptionType": "EMAIL",
+        "Address": "chad@brightkeycloud.com"
+      }
+    ]
+  }
+]
