@@ -1,0 +1,15 @@
+index name: bedrock-knowledge-base-default-index
+vector field: bedrock-knowledge-base-default-vector
+    engine: faiss
+    precision: fp32
+    dimensions: 1024
+    distance type: euclidean
+    M: 16
+    ef_construction: 512
+metadata:
+    AMAZON_BEDROCK_METADATA
+        string
+        false
+    AMAZON_BEDROCK_TEXT_CHUNK
+        string
+        true
