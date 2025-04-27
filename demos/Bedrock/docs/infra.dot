@@ -1,0 +1,30 @@
+digraph INFRA {
+  node [ color = "black", fillcolor = "#E6E6E6", height =1, style = "filled,bold,rounded", fontname = "Arial" ];
+  "kb_bucket" [ label = "kb_bucket
+(AWS::S3::Bucket)", shape =cylinder, fillcolor = "#FFF5CD" ];
+  "bedrock_kb_role" [ label = "bedrock_kb_role
+(AWS::IAM::Role)", shape =rectangle ];
+  "bedrock_kb_policy" [ label = "bedrock_kb_policy
+(AWS::IAM::Policy)", shape =rectangle ];
+  "encryption_policy" [ label = "encryption_policy
+(AWS::OpenSearchServerless::SecurityPolicy)", shape =rectangle ];
+  "network_policy" [ label = "network_policy
+(AWS::OpenSearchServerless::SecurityPolicy)", shape =rectangle ];
+  "kb_collection" [ label = "kb_collection
+(AWS::OpenSearchServerless::Collection)", shape =cylinder, fillcolor = "#FFCFB3" ];
+  "access_policy" [ label = "access_policy
+(AWS::OpenSearchServerless::AccessPolicy)", shape =rectangle ];
+  "kb" [ label = "kb
+(AWS::BedrockAgent::KnowledgeBase)", shape =rectangle, fillcolor = "#B7E0FF" ];
+  "data_source" [ label = "data_source
+(AWS::BedrockAgent::DataSource)", shape =cylinder, fillcolor = "#FFF5CD" ];
+  "bedrock_kb_policy" -> "bedrock_kb_role";
+  "kb_collection" -> "encryption_policy";
+  "kb_collection" -> "network_policy";
+  "access_policy" -> "kb_collection";
+  "access_policy" -> "bedrock_kb_role";
+  "kb" -> "bedrock_kb_role";
+  "kb" -> "kb_collection";
+  "data_source" -> "kb";
+  "data_source" -> "kb_bucket";
+}
