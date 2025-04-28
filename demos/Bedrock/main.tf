@@ -183,16 +183,6 @@ resource "aws_bedrockagent_knowledge_base" "kb" {
           embedding_data_type = "FLOAT32"
         }
       }
-
-      # supplemental_data_storage_configuration {
-      #   storage_location {
-      #     type = "S3"
-
-      #     s3_location {
-      #       uri = "s3://${aws_s3_bucket.kb_bucket.bucket}"
-      #     }
-      #   }
-      # }
     }
   }
 
