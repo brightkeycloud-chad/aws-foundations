@@ -129,10 +129,19 @@ This deployment includes several AWS resources that may incur costs:
 
 ## Cleanup
 
-To avoid ongoing charges, delete the CloudFormation stacks, after deleting the one ECR container image first (by hand):
+To avoid ongoing charges, you can use the cleanup script to remove all resources:
 
-```bash
-aws cloudformation delete-stack --stack-name demo-ecs-app-ecs --region us-west-2
-aws cloudformation delete-stack --stack-name demo-ecs-app-ecr --region us-west-2
-aws cloudformation delete-stack --stack-name demo-ecs-app-vpc --region us-west-2
-```
+1. Make the cleanup script executable:
+   ```bash
+   chmod +x cleanup.sh
+   ```
+
+2. Run the cleanup script:
+   ```bash
+   ./cleanup.sh
+   ```
+
+The cleanup script will:
+1. Delete the ECS stack (cluster, service, and task definitions)
+2. Delete all images from ECR and remove the ECR stack
+3. Delete the VPC stack and all associated networking resources
