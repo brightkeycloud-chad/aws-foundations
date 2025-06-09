@@ -11,15 +11,19 @@ aws cloudformation delete-stack --stack-name ${STACK_NAME}-ecs --region $REGION
 aws cloudformation wait stack-delete-complete --stack-name ${STACK_NAME}-ecs --region $REGION
 
 echo "Deleting ECR stack and repository contents..."
-# Delete all images in the repository
-aws ecr batch-delete-image \
-    --repository-name $REPO_NAME \
-    --image-ids "$(aws ecr list-images \
-    --repository-name $REPO_NAME \
-    --query 'imageIds[*]' \
-    --output json)" \
-    --region $REGION || true
+# Check if repository exists before trying to delete images
+if aws ecr describe-repositories --repository-names $REPO_NAME --region $REGION 2>/dev/null; then
+    # Get image IDs and delete them if any exist
+    IMAGE_IDS=$(aws ecr list-images --repository-name $REPO_NAME --region $REGION --query 'imageIds[*]' --output json)
+    if [ "$IMAGE_IDS" != "[]" ]; then
+        aws ecr batch-delete-image \
+            --repository-name $REPO_NAME \
+            --image-ids "$IMAGE_IDS" \
+            --region $REGION
+    fi
+fi
 
+# Delete the ECR stack
 aws cloudformation delete-stack --stack-name ${STACK_NAME}-ecr --region $REGION
 aws cloudformation wait stack-delete-complete --stack-name ${STACK_NAME}-ecr --region $REGION
 

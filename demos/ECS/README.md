@@ -14,6 +14,7 @@ A simple Node.js application deployed to AWS ECS (Elastic Container Service) usi
 │   ├── ecs.yaml          # ECS cluster and service definition
 │   └── vpc.yaml          # VPC network infrastructure
 ├── deploy.sh             # Deployment automation script
+├── cleanup.sh            # Resource cleanup automation script
 └── README.md             # Project documentation
 ```
 
@@ -82,6 +83,44 @@ STACK_NAME=demo-ecs-app
 REGION=us-west-2
 REPO_NAME=demo-nodejs-app
 ```
+
+## Accessing the Application
+
+After deployment, to access the running container:
+
+1. Get the running task ARN:
+   ```bash
+   aws ecs list-tasks --cluster demo-cluster --region us-west-2
+   ```
+
+2. Describe the task to get its public IP (replace TASK_ARN with the actual ARN):
+   ```bash
+   aws ecs describe-tasks --cluster demo-cluster --tasks TASK_ARN --region us-west-2
+   ```
+
+3. Access the application at `http://PUBLIC_IP:3000`
+
+### Troubleshooting Connectivity
+
+If you cannot reach the container:
+
+1. Verify the task is running:
+   ```bash
+   aws ecs list-tasks --cluster demo-cluster --region us-west-2
+   ```
+
+2. Check the task's network configuration:
+   ```bash
+   aws ecs describe-tasks --cluster demo-cluster --tasks TASK_ARN --region us-west-2
+   ```
+   Ensure it has a public IP assigned and is in RUNNING state.
+
+3. Verify the security group (shown in CloudFormation outputs) allows inbound traffic on port 3000.
+
+4. Check CloudWatch logs for any application errors:
+   ```bash
+   aws logs get-log-events --log-group-name /ecs/demo --log-stream-name demo/demo-container/TASK_ID
+   ```
 
 ## Local Development
 

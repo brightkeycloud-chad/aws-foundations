@@ -63,6 +63,20 @@ Resources:
               awslogs-group: /ecs/demo
               awslogs-stream-prefix: demo
 
+  ContainerSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Security group for demo container
+      VpcId: !Ref VpcId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 3000
+          ToPort: 3000
+          CidrIp: 0.0.0.0/0
+      Tags:
+        - Key: costcenter
+          Value: demo
+
   DemoService:
     Type: AWS::ECS::Service
     Properties:
@@ -73,7 +87,19 @@ Resources:
       NetworkConfiguration:
         AwsvpcConfiguration:
           Subnets: [!Ref SubnetId]
+          SecurityGroups: [!Ref ContainerSecurityGroup]
           AssignPublicIp: ENABLED
       Tags:
         - Key: costcenter
           Value: demo
+
+Outputs:
+  TaskSubnet:
+    Description: Subnet where the task is running
+    Value: !Ref SubnetId
+  SecurityGroup:
+    Description: Security group ID for the container
+    Value: !Ref ContainerSecurityGroup
+  Instructions:
+    Description: Instructions to get the container URL
+    Value: !Sub "To get the container URL, run: aws ecs list-tasks --cluster demo-cluster --region us-west-2 | grep taskArn to get the task ARN, then run: aws ecs describe-tasks --cluster demo-cluster --tasks TASK_ARN --region us-west-2 to get the public IP. Then access http://PUBLIC_IP:3000"
