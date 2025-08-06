@@ -1,0 +1,20 @@
+{
+  "name": "ecs-fargate-demo",
+  "version": "1.0.0",
+  "description": "A friendly and interactive Node.js demo for AWS ECS Fargate",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js",
+    "test": "echo \"✅ No tests yet, but the app is awesome!\" && exit 0"
+  },
+  "keywords": ["aws", "ecs", "fargate", "docker", "nodejs", "demo"],
+  "author": "AWS Demo",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
