@@ -1,0 +1,79 @@
+# Demo 5: Amazon Bedrock AgentCore — Overview
+
+## What is AgentCore? (30 seconds)
+
+AgentCore is a **platform for building, deploying, and operating AI agents at scale**.
+It's the production infrastructure layer — think of it as "ECS/Lambda for AI agents."
+
+Key differentiator: **Works with ANY framework and ANY model** — Strands Agents,
+LangChain, LangGraph, Google ADK, OpenAI Agents, or your own custom code.
+
+## Modular Services (60 seconds — walk through each)
+
+| Service | What It Does | Why It Matters |
+|---------|-------------|----------------|
+| **Runtime** | Serverless agent deployment with session isolation, 8-hour execution windows | No infra to manage, each session gets its own microVM |
+| **Memory** | Short-term + long-term context persistence | Agents remember past conversations without you managing state |
+| **Gateway** | Turns APIs, Lambda functions, and MCP servers into agent-compatible tools | One secure endpoint for all your tools |
+| **Identity** | OAuth integration, secure vault for refresh tokens | Agents can authenticate to Salesforce, GitHub, Jira, etc. |
+| **Observability** | CloudWatch dashboards, OTEL compatible, full execution traces | See exactly what your agent did and why |
+| **Code Interpreter** | Secure sandbox for code execution | Agents can write and run code safely |
+| **Browser** | Serverless browser runtime for agents | Agents can interact with web applications |
+| **Evaluations** | Test and improve agent quality | Automated quality checks before production |
+| **Policy** | Real-time enforcement of agent action controls | Guardrails for what agents can DO, not just SAY |
+
+## Key Talking Points
+
+1. **Framework agnostic**: Unlike managed Bedrock Agents (which is AWS-native),
+   AgentCore lets you bring your own framework. Built a LangChain agent? Deploy it
+   to AgentCore Runtime without rewriting.
+
+2. **MCP + A2A support**: AgentCore Gateway connects to existing MCP servers and
+   supports the Agent-to-Agent (A2A) protocol for multi-agent systems.
+
+3. **Enterprise security**: VPC support, session isolation in microVMs, identity-aware
+   authorization. Customers like Thomson Reuters, Ericsson, and National Australia Bank
+   are using it in production.
+
+4. **Consumption-based pricing**: Pay only for what you use. Mix and match services.
+
+## Optional Live Demo: AgentCore CLI (if time permits)
+
+```bash
+# Install the AgentCore CLI
+pip install bedrock-agentcore-cli
+
+# Scaffold a new agent project (uses Strands Agents by default)
+agentcore init my-demo-agent
+
+# Show the generated project structure
+ls my-demo-agent/
+
+# Deploy to AgentCore Runtime (requires Docker)
+cd my-demo-agent
+agentcore deploy
+
+# Invoke the deployed agent
+agentcore invoke --session-id demo-session --prompt "Hello, what can you do?"
+```
+
+**Note**: The CLI deploy requires Docker and takes ~2 minutes. For a live demo,
+consider pre-deploying and just showing the invoke step.
+
+## Transition to Wrap-Up
+
+"AgentCore is where agents go to production. Everything we showed today —
+the model invocation, guardrails, RAG, and tool use — these are the building
+blocks. AgentCore is the platform that deploys and operates them at enterprise scale."
+
+## Available Regions
+
+US East (N. Virginia), US West (Oregon), Asia Pacific (Sydney), Europe (Frankfurt),
+and 5 additional regions.
+
+## Resources
+
+- [AgentCore Documentation](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/)
+- [AgentCore Product Page](https://aws.amazon.com/bedrock/agentcore/)
+- [Getting Started with AgentCore CLI](https://docs.aws.amazon.com/bedrock-agentcore/latest/devguide/runtime-get-started-cli.html)
+- [Best Practices Blog](https://aws.amazon.com/blogs/machine-learning/ai-agents-in-enterprises-best-practices-with-amazon-bedrock-agentcore/)
