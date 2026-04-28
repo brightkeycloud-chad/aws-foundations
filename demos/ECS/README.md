@@ -172,7 +172,7 @@ This demo is perfect for learning:
 ## 💰 Cost Considerations
 
 This demo uses several AWS services that may incur costs:
-- **ECS Fargate tasks** (~$0.04/hour for 0.25 vCPU, 0.5GB RAM)
+- **ECS Fargate tasks on AWS Graviton (arm64)** (~$0.0099/hour for 0.25 vCPU, 0.5GB RAM — ~20% cheaper than x86)
 - **ECR Repository** (minimal storage costs)
 - **VPC resources** (mostly free tier eligible)
 

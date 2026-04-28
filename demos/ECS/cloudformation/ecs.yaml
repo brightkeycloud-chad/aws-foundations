@@ -49,6 +49,9 @@ Resources:
       NetworkMode: awsvpc
       Cpu: "256"
       Memory: "512"
+      RuntimePlatform:
+        CpuArchitecture: ARM64
+        OperatingSystemFamily: LINUX
       ExecutionRoleArn: !GetAtt TaskExecutionRole.Arn
       ContainerDefinitions:
         - Name: demo-container

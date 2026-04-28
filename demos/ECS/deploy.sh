@@ -82,7 +82,7 @@ aws ecr get-login-password --region $REGION | docker login --username AWS --pass
 print_success "$CHECKMARK" "Docker authenticated!"
 
 print_step "$BUILDING" "Building Docker image (this might take a moment)..."
-docker buildx build --platform linux/amd64 -t $REPO_NAME ./app --load
+docker buildx build --platform linux/arm64 -t $REPO_NAME ./app --load
 print_success "$CHECKMARK" "Docker image built successfully!"
 
 print_step "$ROCKET" "Pushing image to ECR..."
